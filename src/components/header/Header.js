@@ -7,12 +7,14 @@ import { MdNotifications, MdApps, MdVideocam } from "react-icons/md";
 function Header({handleToggleSidebar}) {
   return (
     <div className="border border-dark header">
-      <FaBars className="header__menu" size={26} onClick={() => handleToggleSidebar()}/>
-      <img
-        src="https://www.thebf.org/Theme/BootstrapTBF2018/assets/img/yt_logo_mono_dark.png"
-        alt="youtube logo"
-        className="header__logo"
-      />
+      <div className="header__left">
+        <FaBars className="header__menu" size={26} onClick={() => handleToggleSidebar()}/>
+        <img
+          src="https://www.thebf.org/Theme/BootstrapTBF2018/assets/img/yt_logo_mono_dark.png"
+          alt="youtube logo"
+          className="header__logo"
+        />
+      </div> 
       <form>
         <input type="text" placeholder="Search" />
         <button type="submit">
@@ -20,10 +22,11 @@ function Header({handleToggleSidebar}) {
         </button>
       </form>
       <div className="header__icons">
-        <MdVideocam size={28}/>
-        <MdNotifications size={28} />
-        <MdApps size={28} />
+        <MdVideocam className='header__icon' size={28}/>
+        <MdNotifications className='header__icon' size={28} />
+        <MdApps className='header__icon' size={28} />
         <img
+          className='header__icon'
           src="https://cdn.icon-icons.com/icons2/2643/PNG/512/male_boy_person_people_avatar_icon_159358.png"
           alt="user"
         />

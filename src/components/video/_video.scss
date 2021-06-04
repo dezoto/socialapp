@@ -1,0 +1,59 @@
+@import '../../base';
+
+.video {
+    padding: 0.7rem;
+    margin-bottom: 1.5rem;
+
+    &__top {
+        position: relative;
+
+        img {
+            width: 100%;
+        }
+
+        span {
+            position: absolute;
+            bottom: 0.1rem;
+            right: 0.2rem;
+            padding: 0.01rem 0.2rem;
+            background: #080808ec;
+            border-radius: 0.3rem;
+            font-size: 14px;
+            color: #fff;
+        }
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+
+    &__info {
+        display: flex;
+        margin-top: 10px;
+        padding-right: 30px;
+    }
+
+    &__text {
+        margin-left: 15px;
+
+        h5 {
+            font-size: 14.5px;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            color:  #fff;
+            @include line-clamp(1);
+        }
+
+        p {
+            font-size: 14px;
+            color: $text-color;
+            line-height: 0.3rem;
+        }
+    }
+
+    &__avatar {
+        width: 2.7rem;
+        height: 2.4rem;
+        border-radius: 50%;
+    }
+}
