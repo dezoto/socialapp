@@ -3,14 +3,15 @@ import "./_app.scss";
 import Header from "./components/header/Header";
 import Sidebar from "./components/sidebar/Sidebar";
 import HomeScreen from "./screens/HomeScreen";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginScreen from "./screens/loginScreen/LoginScreen";
 import {
-  BrowserRouter as Router,
   Route,
   Switch,
   Redirect,
+  useHistory,
 } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Layout = ({ children }) => {
   const [sidebar, toggleSidebar] = useState(false);
@@ -29,9 +30,16 @@ const Layout = ({ children }) => {
 };
 
 function App() {
+  const token = useSelector(state => state.auth)
+  const {accessToken, loading} = token
+  const history = useHistory();
+  useEffect(() => {
+    if(!loading && !accessToken) {
+      history.push('/auth')
+    }  
+  }, [loading, accessToken, history]);
   return (
     <>
-      <Router>
         <Switch>
           <Route path="/" exact>
             <Layout>
@@ -50,7 +58,6 @@ function App() {
             <Redirect to="/" />
           </Route>
         </Switch>
-      </Router>
     </>
   );
 }
