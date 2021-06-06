@@ -1,8 +1,14 @@
 import React from 'react'
 import './_sidebar.scss'
 import {MdSubscriptions, MdExitToApp, MdThumbUp, MdHistory, MdLibraryBooks, MdHome, MdWatchLater} from "react-icons/md"
+import { useDispatch } from 'react-redux'
+import { logout } from '../../redux/actions/authAction';
 
 function Sidebar({sidebar, handleToggleSidebar}) {
+    const dispatch = useDispatch();
+    const logOutHandler = () => {
+        dispatch(logout())
+    }
     return (
         <nav className={sidebar? "sidebar open": "sidebar"} onClick={() => handleToggleSidebar()}>
             <li>
@@ -30,7 +36,7 @@ function Sidebar({sidebar, handleToggleSidebar}) {
                 <span>Watch later</span>
             </li>
             <hr/>
-            <li>
+            <li onClick={logOutHandler}>
                 <MdExitToApp size={23}/>
                 <span>Logout</span>
             </li>
