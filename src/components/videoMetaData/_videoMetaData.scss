@@ -1,0 +1,73 @@
+@import '../../base.scss';
+
+.videoMetaData {
+
+    &__top {
+
+        h5{
+            color: #fff;
+        }
+
+        span {
+            cursor: pointer;
+        }
+
+        &__stats {
+            font-size: 14px;
+        }
+    }
+
+    &__channel {
+        border-top: 0.2px solid $border-color;
+
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        button {
+            background-color: rgb(230, 7, 7);
+            color: #fff;
+            border-radius: 2px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+            font-size: 14px;
+
+            &:hover {
+                color: #fff;
+            }
+
+            &:focus {
+                border: none;
+                outline: none;
+            }
+        }
+    }
+
+    &__description {
+        font-size: 0.9rem;
+        white-space: pre-line;
+        border-bottom: 0.2px solid $border-color;
+        color: #fff;
+
+        .showMoreText {
+            text-decoration: none;
+            color: $text-color;
+            display: block;
+            margin: 1rem 0;
+            font-weight: 600;
+            font-size: 13px;
+        }
+    }
+}
+
+.videoChannelName {
+    color: #fff;
+}
+
+.videoChannelSubs {
+    color: $text-color;
+    font-size: 13px;
+}
