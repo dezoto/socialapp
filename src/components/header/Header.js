@@ -3,11 +3,9 @@ import "./_header.scss";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdNotifications, MdApps, MdVideocam } from "react-icons/md";
-import { useSelector } from "react-redux";
+
 
 function Header({ handleToggleSidebar }) {
-const profile = useSelector(state => state.auth)
-const {user} = profile
   return (
     <div className="border border-dark header">
       <div className="header__left">
@@ -32,7 +30,11 @@ const {user} = profile
         <MdVideocam className="header__icon" size={28} />
         <MdNotifications className="header__icon" size={28} />
         <MdApps className="header__icon" size={28} />
-        <img className="header__icon" src={user.photoURL} alt="userImage" />
+        <img
+          className="header__icon"
+          src="http://pm1.narvii.com/6387/8256503d4679d3b2ea14d5df4ce2a6bd70d2b3f9_00.jpg"
+          alt="userImage"
+        />
       </div>
     </div>
   );

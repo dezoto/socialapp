@@ -5,12 +5,7 @@ import Sidebar from "./components/sidebar/Sidebar";
 import HomeScreen from "./screens/HomeScreen";
 import { useEffect, useState } from "react";
 import LoginScreen from "./screens/loginScreen/LoginScreen";
-import {
-  Route,
-  Switch,
-  Redirect,
-  useHistory,
-} from "react-router-dom";
+import { Route, Switch, Redirect, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 
 const Layout = ({ children }) => {
@@ -30,35 +25,33 @@ const Layout = ({ children }) => {
 };
 
 function App() {
-  const token = useSelector(state => state.auth)
-  const {accessToken, loading} = token
+  const token = useSelector((state) => state.auth);
+  const { accessToken, loading } = token;
   const history = useHistory();
   useEffect(() => {
-    if(!loading && !accessToken) {
-      history.push('/auth')
-    }  
+    if (!loading && !accessToken) {
+      history.push("/auth");
+    }
   }, [loading, accessToken, history]);
   return (
-    <>
-        <Switch>
-          <Route path="/" exact>
-            <Layout>
-              <HomeScreen />
-            </Layout>
-          </Route>
-          <Route path="/auth">
-            <LoginScreen />
-          </Route>
-          <Route path="/search">
-            <Layout>
-              <h1>Search results</h1>
-            </Layout>
-          </Route>
-          <Route>
-            <Redirect to="/" />
-          </Route>
-        </Switch>
-    </>
+    <Switch>
+      <Route path="/" exact>
+        <Layout>
+          <HomeScreen />
+        </Layout>
+      </Route>
+      <Route path="/auth">
+        <LoginScreen />
+      </Route>
+      <Route path="/search">
+        <Layout>
+          <h1>Search results</h1>
+        </Layout>
+      </Route>
+      <Route>
+        <Redirect to="/" />
+      </Route>
+    </Switch>
   );
 }
 
