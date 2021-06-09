@@ -60,3 +60,26 @@ export const getVideosByCategory = (keyword) => async (dispatch, getState) => {
     });
   }
 };
+
+export const getVideoById = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: actions.SELECTED_VIDEO_REQUEST,
+    });
+    const { data } = await request("/videos", {
+      params: {
+        part: "snippet, statistics",
+        id: id,
+      },
+    });
+    dispatch({
+      type: actions.SELECTED_VIDEO_SUCCESS,
+      payload: data.items[0],
+    });
+  } catch (error) {
+    dispatch({
+      type: actions.SELECTED_VIDEO_FAIL,
+      payload: error.message,
+    });
+  }
+};

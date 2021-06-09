@@ -3,6 +3,7 @@ import "./_header.scss";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdNotifications, MdApps, MdVideocam } from "react-icons/md";
+import { Link } from "react-router-dom";
 
 
 function Header({ handleToggleSidebar }) {
@@ -14,11 +15,13 @@ function Header({ handleToggleSidebar }) {
           size={26}
           onClick={() => handleToggleSidebar()}
         />
+        <Link to='/'>
         <img
           src="https://www.thebf.org/Theme/BootstrapTBF2018/assets/img/yt_logo_mono_dark.png"
           alt="youtube logo"
           className="header__logo"
         />
+        </Link>
       </div>
       <form>
         <input type="text" placeholder="Search" />
