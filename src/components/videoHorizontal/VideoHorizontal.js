@@ -3,7 +3,6 @@ import "./_videoHorizontal.scss";
 import moment from "moment";
 import numeral from "numeral";
 import { LazyLoadImage } from "react-lazy-load-image-component";
-import request from "../../api";
 import { Col, Row } from "react-bootstrap";
 
 function VideoHorizontal() {
