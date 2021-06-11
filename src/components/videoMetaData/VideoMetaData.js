@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import "./_videoMetaData.scss";
-import moment from "moment";
 import numeral from "numeral";
 import { MdThumbUp, MdThumbDown } from "react-icons/md";
 import ShowMoreText from "react-show-more-text";
@@ -18,6 +17,11 @@ function VideoMetaData({ video: { snippet, statistics }, videoId }) {
   const { subscriptionStatus } = useSelector(
     (state) => state.channelDetails
   );
+  const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+var date = new Date(publishedAt);
+date = date.toLocaleDateString(undefined, {day:'2-digit'}) + ' ' + date.toLocaleDateString(undefined, {month:'short'}) + ' ' + date.toLocaleDateString(undefined, {year:'numeric'})
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,8 +35,8 @@ function VideoMetaData({ video: { snippet, statistics }, videoId }) {
         <h5>{title}</h5>
         <div className="d-flex justify-content-between align-items-center py-1">
           <span className="videoMetaData__top__stats">
-            {numeral(viewCount).format("0.a").toUpperCase()} Views •{" "}
-            {moment(publishedAt).fromNow()}
+            {numberWithCommas(viewCount)} Views •{" "}
+            {date}
           </span>
           <div>
             <span>

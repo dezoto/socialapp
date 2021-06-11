@@ -25,6 +25,9 @@ export const getChannelById = (id) => async (dispatch) => {
 };
 
 export const checkSubscriptionStatus = (id) => async (dispatch, getState) => {
+  // const {
+  //   auth: { accessToken },
+  // } = getState();
   try {
     const { data } = await request("/subscriptions", {
       params: {
@@ -38,9 +41,8 @@ export const checkSubscriptionStatus = (id) => async (dispatch, getState) => {
     });
     dispatch({
       type: actions.SET_SUBSCRIPTION_STATUS,
-      payload: data.items.length !== 0, 
+      payload: data.items.length !== 0,
     });
-    console.log(data);
   } catch (error) {
     console.log(error.response.data);
   }

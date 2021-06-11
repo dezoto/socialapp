@@ -10,7 +10,7 @@ function VideoHorizontal() {
   const _duration = moment.utc(seconds * 1000).format("mm:ss");
   return (
     <Row className="m-1 py-2 videoHorizontal align-items-center">
-      <Col xs={6} md={4} className="videoHorizontal__left">
+      <Col xs={6} md={5} className="videoHorizontal__left">
         <LazyLoadImage
           src="https://t3y4b2m7.rocketcdn.me/wp-content/uploads/2018/07/youtube-logo-1920-1.jpg"
           effect="blur"
@@ -19,7 +19,7 @@ function VideoHorizontal() {
         />
         <span className="videoHorizontal__duration">{_duration}</span>
       </Col>
-      <Col xs={6} md={8} className="videoHorizontal__right p-0">
+      <Col xs={6} md={7} className="videoHorizontal__right p-0">
         <p className="videoHorizontal__title mb-1">Dragon Ball Super Goku</p>
         <div className="videoHorizontal__channel d-flex align-items-center my-1">
         {/* <LazyLoadImage
