@@ -34,6 +34,7 @@ export const checkSubscriptionStatus = (id) => async (dispatch, getState) => {
         part: "snippet",
         forChannelId: id,
         mine: true,
+        maxResults: 50,
       },
       headers: {
         Authorization: `Bearer ${getState().auth.accessToken}`,

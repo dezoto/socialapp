@@ -84,3 +84,31 @@ export const getVideoById = (id) => async (dispatch) => {
   }
 };
 
+export const getRelatedVideos = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: actions.RELATED_VIDEOS_REQUEST,
+    });
+    const { data } = await request("/search", {
+      params: {
+        part: "snippet",
+        relatedToVideoId: id,
+        maxResults: 40,
+        type: "video",
+      },
+    });
+    dispatch({
+      type: actions.RELATED_VIDEOS_SUCCESS,
+      payload: data.items,
+    });
+  } catch (error) {
+    dispatch({
+      type: actions.RELATED_VIDEOS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+
+
+

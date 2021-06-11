@@ -10,8 +10,7 @@ export const getCommentByVideoId = (id) => async (dispatch) => {
       params: {
         part: "snippet",
         videoId: id,
-        maxResults: 40,
-        order: "time"
+        maxResults: 50,
       },
     });
     dispatch({

@@ -66,3 +66,31 @@ export const selectedVideoReducer = (
       return state;
   }
 };
+
+export const relatedVideosReducer = (
+  state = { loading: true, videos: [] },
+  action
+) => {
+  const { payload, type } = action;
+  switch (type) {
+    case actions.RELATED_VIDEOS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.RELATED_VIDEOS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        videos: payload,
+      };
+    case actions.RELATED_VIDEOS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+      };
+    default:
+      return state;
+  }
+};

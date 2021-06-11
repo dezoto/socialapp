@@ -69,21 +69,82 @@
         display: flex;
         align-items: center;
         justify-self: flex-end !important;
+        color: #fff;
 
         img {
             border-radius: 50%;
             width: 35px;
             object-fit: contain;
             height: 35px;
+            margin-left: 10px;
+            cursor: pointer;
         }
     }
 
     &__icon {
-        margin-left: 20px;
-        margin-right: 0;
-    }
+        color: #fff;
 
+    }
 }
+
+.iconButton {
+    background-color: lightgray;
+
+    &:focus {
+        color: lightgray;
+    }
+}
+
+.buttonCaption1:hover::after {
+    background: rgb(73, 72, 72);
+    border-radius: 5px;
+    bottom: -35px;
+    color: #fff;
+    content: "Create";
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 99;
+    width: 50px;
+    font-size: small;
+  }
+  .buttonCaption2:hover::after {
+    background: rgb(73, 72, 72);
+    border-radius: 5px;
+    bottom: -35px;
+    color: #fff;
+    content: "Youtube Apps";
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 99;
+    width: 100px;
+    font-size: small;
+  }
+  .buttonCaption3:hover::after {
+    background: rgb(73, 72, 72);
+    border-radius: 5px;
+    bottom: -34px;
+    color: #fff;
+    content: "Notifications";
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 99;
+    width: 90px;
+    font-size: small;
+  }
+
+  .buttonCaption4:hover::after {
+    background: rgb(73, 72, 72);
+    border-radius: 5px;
+    bottom: -30px;
+    right: 360px;
+    color: #fff;
+    content: "Search";
+    padding: 5px 5px;
+    position: absolute;
+    z-index: 99;
+    width: 90px;
+    font-size: small;
+  }
 
 @media (max-width: $breakpoint-small) {
     .header {

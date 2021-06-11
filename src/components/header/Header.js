@@ -4,7 +4,7 @@ import { FaBars } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdNotifications, MdApps, MdVideocam } from "react-icons/md";
 import { Link } from "react-router-dom";
-
+import { IconButton } from "@material-ui/core";
 
 function Header({ handleToggleSidebar }) {
   return (
@@ -15,24 +15,30 @@ function Header({ handleToggleSidebar }) {
           size={26}
           onClick={() => handleToggleSidebar()}
         />
-        <Link to='/'>
-        <img
-          src="https://www.thebf.org/Theme/BootstrapTBF2018/assets/img/yt_logo_mono_dark.png"
-          alt="youtube logo"
-          className="header__logo"
-        />
+        <Link to="/">
+          <img
+            src="https://www.thebf.org/Theme/BootstrapTBF2018/assets/img/yt_logo_mono_dark.png"
+            alt="youtube logo"
+            className="header__logo"
+          />
         </Link>
       </div>
       <form>
         <input type="text" placeholder="Search" />
-        <button type="submit">
+        <button className='buttonCaption4' type="submit">
           <AiOutlineSearch size={22} />
         </button>
       </form>
       <div className="header__icons">
-        <MdVideocam className="header__icon" size={28} />
-        <MdNotifications className="header__icon" size={28} />
-        <MdApps className="header__icon" size={28} />
+        <IconButton className="iconButton buttonCaption1">
+          <MdVideocam className="header__icon" size={25} />
+        </IconButton>
+        <IconButton className="iconButton buttonCaption2">
+          <MdApps className="header__icon" size={25} />
+        </IconButton>
+        <IconButton className="iconButton buttonCaption3">
+          <MdNotifications className="header__icon" size={25} />
+        </IconButton>
         <img
           className="header__icon"
           src="http://pm1.narvii.com/6387/8256503d4679d3b2ea14d5df4ce2a6bd70d2b3f9_00.jpg"
