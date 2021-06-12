@@ -7,15 +7,17 @@ import { Col, Row } from "react-bootstrap";
 import request from "../../api";
 import { useHistory } from "react-router-dom";
 
-function VideoHorizontal({video}) {
-
+function VideoHorizontal({ video, searchScreen }) {
   const [views, setViews] = useState(null);
   const [duration, setDuration] = useState(null);
+  const [channelIcon, setChannelIcon] = useState(null);
   const history = useHistory();
 
   const handleClick = () => {
-    history.push(`/watch/${video.id.videoId}`)
-  }
+    isVideo?
+    history.push(`/watch/${video.id.videoId}`):
+    history.push(`/channel/${video.snippet.channelId}`)
+  };
 
   useEffect(() => {
     const getVideoDetails = async () => {
@@ -33,29 +35,78 @@ function VideoHorizontal({video}) {
     getVideoDetails();
   }, [video.id.videoId]);
 
+  useEffect(() => {
+    const get_channel_icon = async () => {
+      const {
+        data: { items },
+      } = await request("/channels", {
+        params: {
+          part: "snippet",
+          id: video.snippet.channelId,
+        },
+      });
+      setChannelIcon(items[0].snippet.thumbnails.default);
+    };
+    get_channel_icon();
+  }, [video.snippet.channelId]);
+
   const seconds = moment.duration(duration).asSeconds();
   const _duration = moment.utc(seconds * 1000).format("mm:ss");
+  const isVideo = video.id.kind === "youtube#video";
+  const thumbnail = !isVideo && "videoHorizontal__thumbnail-channel";
 
   return (
-    <Row className="m-1 py-2 videoHorizontal align-items-center" onClick={handleClick}>
-      <Col xs={6} md={6} className="videoHorizontal__left">
+    <Row
+      className="m-1 py-2 videoHorizontal align-items-center"
+      onClick={handleClick}
+    >
+      <Col xs={6} md={searchScreen ? 4 : 6} className="videoHorizontal__left">
         <LazyLoadImage
           src={video?.snippet?.thumbnails?.medium?.url}
           effect="blur"
-          className="videoHorizontal__thumbnail"
+          className={`videoHorizontal__thumbnail ${thumbnail}`}
           wrapperClassName="videoHorizontal__thumbnail-wrapper"
         />
-        <span className="videoHorizontal__duration">{_duration}</span>
+        {isVideo && (
+          <span className="videoHorizontal__duration">{_duration}</span>
+        )}
       </Col>
-      <Col xs={6} md={6} className="videoHorizontal__right p-0">
+      <Col
+        xs={6}
+        md={searchScreen ? 5 : 6}
+        className="videoHorizontal__right p-0"
+      >
         <p className="videoHorizontal__title mb-0">{video?.snippet?.title}</p>
-        <div className="videoHorizontal__channel d-flex align-items-center">
-        <p>{video?.snippet?.channelTitle}</p>
-        </div>
-        <div className="videoHorizontal__details">
+        {searchScreen && isVideo && (
+          <div className="videoHorizontal__details my-1">
             {numeral(views).format("0.a").toUpperCase()} •{" "}
             {moment(video?.snippet?.publishedAt).fromNow()}
-        </div>
+          </div>
+        )}
+        {isVideo && (
+          <div className="videoHorizontal__channel d-flex align-items-center">
+            {searchScreen && (
+              <LazyLoadImage
+                className="my-2"
+                src={channelIcon?.url}
+                effect="blur"
+              />
+            )}
+            <p>{video?.snippet?.channelTitle}</p>
+          </div>
+        )}
+
+        {!searchScreen && (
+          <div className="videoHorizontal__details">
+            {numeral(views).format("0.a").toUpperCase()} •{" "}
+            {moment(video?.snippet?.publishedAt).fromNow()}
+          </div>
+        )}
+        {searchScreen && (
+          <p className="mt-1 videoHorizontal__description">
+            {video.snippet?.description}
+          </p>
+        )}
       </Col>
     </Row>
   );

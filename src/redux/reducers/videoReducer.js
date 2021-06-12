@@ -94,3 +94,33 @@ export const relatedVideosReducer = (
       return state;
   }
 };
+
+export const searchedVideosReducer = (
+  state = { loading: true, videos: [] },
+  action
+) => {
+  const { payload, type } = action;
+  switch (type) {
+    case actions.SEARCH_VIDEOS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.SEARCH_VIDEOS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        videos: payload,
+      };
+    case actions.SEARCH_VIDEOS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+      };
+    default:
+      return state;
+  }
+};
+
+

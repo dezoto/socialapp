@@ -13,6 +13,11 @@
     &__thumbnail {
         width: 100%;
 
+        &-channel {
+            width: 50%;
+            border-radius: 50%;
+        }
+
         &-wrapper {
             width: 100%;
         }
@@ -44,8 +49,6 @@
         font-weight: 600;
         color: #fff;
         letter-spacing: 0.1px;
-        
-
         @include line-clamp(2)
     }
 
@@ -62,6 +65,11 @@
             margin-bottom: 0;
             @include line-clamp(2)
         }
+    }
+
+    &__description {
+        @include line-clamp(3);
+        font-size: 13px;
     }
 }
 

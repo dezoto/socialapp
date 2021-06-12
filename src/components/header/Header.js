@@ -1,12 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import "./_header.scss";
 import { FaBars } from "react-icons/fa";
 import { AiOutlineSearch } from "react-icons/ai";
 import { MdNotifications, MdApps, MdVideocam } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { IconButton } from "@material-ui/core";
 
 function Header({ handleToggleSidebar }) {
+  const [input, setInput] = useState('');
+  const history = useHistory();
+  const submitHandler = (e) => {
+    e.preventDefault();
+    history.push(`/search/${input}`)
+  }
   return (
     <div className="border border-dark header">
       <div className="header__left">
@@ -23,8 +29,8 @@ function Header({ handleToggleSidebar }) {
           />
         </Link>
       </div>
-      <form>
-        <input type="text" placeholder="Search" />
+      <form onSubmit={submitHandler}>
+        <input type="text" placeholder="Search" value={input} onChange={(e) => setInput(e.target.value)}/>
         <button className='buttonCaption4' type="submit">
           <AiOutlineSearch size={22} />
         </button>

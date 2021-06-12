@@ -109,6 +109,27 @@ export const getRelatedVideos = (id) => async (dispatch) => {
   }
 };
 
-
-
-
+export const getVideosBySearch = (keyword) => async (dispatch) => {
+  try {
+    dispatch({
+      type: actions.SEARCH_VIDEOS_REQUEST,
+    });
+    const { data } = await request("/search", {
+      params: {
+        part: "snippet",
+        maxResults: 20,
+        q: keyword,
+        type: "videos, channel",
+      },
+    });
+    dispatch({
+      type: actions.SEARCH_VIDEOS_SUCCESS,
+      payload: data.items,
+    });
+  } catch (error) {
+    dispatch({
+      type: actions.SEARCH_VIDEOS_FAIL,
+      payload: error.message,
+    });
+  }
+};
