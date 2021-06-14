@@ -3,7 +3,7 @@ import { Container} from "react-bootstrap";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import { useDispatch, useSelector } from "react-redux";
 import VideoHorizontal from "../../components/videoHorizontal/VideoHorizontal";
-import { getVideosByChannel } from "../../redux/actions/videoActions";
+import { getSubscribedChannel } from "../../redux/actions/videoActions";
 import "./subscriptionsScreen.scss";
 
 function SubscriptionsScreen() {
@@ -12,7 +12,7 @@ function SubscriptionsScreen() {
     (state) => state.subscriptionsChannel
   );
   useEffect(() => {
-    dispatch(getVideosByChannel());
+    dispatch(getSubscribedChannel());
   }, [dispatch]);
   return (
     <Container fluid>

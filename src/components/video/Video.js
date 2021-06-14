@@ -6,7 +6,7 @@ import numeral from "numeral";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { useHistory } from "react-router-dom";
 
-function Video({ video }) {
+function Video({ video, channelScreen }) {
   const {
     id,
     snippet: {
@@ -16,6 +16,7 @@ function Video({ video }) {
       publishedAt,
       thumbnails: { medium },
     },
+    contentDetails,
   } = video;
   const [views, setViews] = useState(null);
   const [duration, setDuration] = useState(null);
@@ -23,7 +24,7 @@ function Video({ video }) {
 
   const seconds = moment.duration(duration).asSeconds();
   const _duration = moment.utc(seconds * 1000).format("mm:ss");
-  const _videoId = id?.videoId || id;
+  const _videoId = id?.videoId || contentDetails?.videoId || id;
 
   useEffect(() => {
     const getVideoDetails = async () => {
@@ -56,10 +57,10 @@ function Video({ video }) {
     getChannelIcon();
   }, [channelId]);
 
-  const history = useHistory()
+  const history = useHistory();
   const handleVideoClick = () => {
-    history.push(`/watch/${_videoId}`)
-  }
+    history.push(`/watch/${_videoId}`);
+  };
   return (
     <div className="video" onClick={handleVideoClick}>
       <div className="video__top">
@@ -68,13 +69,13 @@ function Video({ video }) {
         <span className="video__top__duration">{_duration}</span>
       </div>
       <div className="video__info">
-        {/* <img alt={channelTitle} src={channelIcon} /> */}
-        <LazyLoadImage src={channelIcon} effect="blur" />
+        {!channelScreen && <LazyLoadImage src={channelIcon} effect="blur" />}
+
         <div className="video__text">
           <h5>{title}</h5>
-          <p>{channelTitle}</p>
+          {!channelScreen && <p>{channelTitle}</p>}
           <p>
-            {numeral(views).format("0.a").toUpperCase()} •{" "}
+            {numeral(views).format("0.a").toUpperCase()} Views •{" "}
             {moment(publishedAt).fromNow()}
           </p>
         </div>

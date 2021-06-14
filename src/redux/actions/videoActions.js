@@ -134,7 +134,7 @@ export const getVideosBySearch = (keyword) => async (dispatch) => {
   }
 };
 
-export const getVideosByChannel = () => async (dispatch, getState) => {
+export const getSubscribedChannel = () => async (dispatch, getState) => {
   try {
     dispatch({
       type: actions.SUBSCRIPTION_CHANNEL_REQUEST,
@@ -155,6 +155,37 @@ export const getVideosByChannel = () => async (dispatch, getState) => {
   } catch (error) {
     dispatch({
       type: actions.SUBSCRIPTION_CHANNEL_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const getVideosByChannel = (id) => async (dispatch) => {
+  try {
+    dispatch({
+      type: actions.CHANNEL_VIDEOS_REQUEST,
+    });
+    const { data: {items} } = await request("/channels", {
+      params: {
+        part: "contentDetails",
+        id: id,
+      },
+    });
+    const uploadPlaylistId = items[0].contentDetails.relatedPlaylists.uploads;
+    const { data } = await request("/playlistItems", {
+      params: {
+        part: "contentDetails,snippet",
+        playlistId: uploadPlaylistId,
+        maxResults: 30,
+      },
+    });
+    dispatch({
+      type: actions.CHANNEL_VIDEOS_SUCCESS,
+      payload: data.items,
+    });
+  } catch (error) {
+    dispatch({
+      type: actions.CHANNEL_VIDEOS_FAIL,
       payload: error.message,
     });
   }

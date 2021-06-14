@@ -151,4 +151,31 @@ export const subscriptionsChannelReducer = (
   }
 };
 
+export const channelVideosReducer = (
+  state = { loading: true, videos: [] },
+  action
+) => {
+  const { payload, type } = action;
+  switch (type) {
+    case actions.CHANNEL_VIDEOS_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      };
+    case actions.CHANNEL_VIDEOS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        videos: payload,
+      };
+    case actions.CHANNEL_VIDEOS_FAIL:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+      };
+    default:
+      return state;
+  }
+};
 
