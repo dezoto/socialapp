@@ -7,16 +7,29 @@ import { Col, Row } from "react-bootstrap";
 import request from "../../api";
 import { useHistory } from "react-router-dom";
 
-function VideoHorizontal({ video, searchScreen }) {
+function VideoHorizontal({ video, searchScreen, subScreen }) {
   const [views, setViews] = useState(null);
   const [duration, setDuration] = useState(null);
   const [channelIcon, setChannelIcon] = useState(null);
   const history = useHistory();
-
+  const {
+    id,
+    snippet: {
+      channelId,
+      channelTitle,
+      description,
+      title,
+      publishedAt,
+      thumbnails: { medium },
+      resourceId,
+    },
+  } = video;
+  const _channelId = resourceId?.channelId || channelId;
+  const isVideo = video.id.kind === "youtube#video";
   const handleClick = () => {
-    isVideo?
-    history.push(`/watch/${video.id.videoId}`):
-    history.push(`/channel/${video.snippet.channelId}`)
+    isVideo
+      ? history.push(`/watch/${id.videoId}`)
+      : history.push(`/channel/${_channelId}`);
   };
 
   useEffect(() => {
@@ -26,14 +39,16 @@ function VideoHorizontal({ video, searchScreen }) {
       } = await request("/videos", {
         params: {
           part: "contentDetails, statistics",
-          id: video.id.videoId,
+          id: id.videoId,
         },
       });
       setDuration(items[0].contentDetails?.duration);
       setViews(items[0].statistics.viewCount);
     };
-    getVideoDetails();
-  }, [video.id.videoId]);
+    if (isVideo) {
+      getVideoDetails();
+    }
+  }, [id, isVideo]);
 
   useEffect(() => {
     const get_channel_icon = async () => {
@@ -42,27 +57,30 @@ function VideoHorizontal({ video, searchScreen }) {
       } = await request("/channels", {
         params: {
           part: "snippet",
-          id: video.snippet.channelId,
+          id: channelId,
         },
       });
       setChannelIcon(items[0].snippet.thumbnails.default);
     };
     get_channel_icon();
-  }, [video.snippet.channelId]);
+  }, [channelId]);
 
   const seconds = moment.duration(duration).asSeconds();
   const _duration = moment.utc(seconds * 1000).format("mm:ss");
-  const isVideo = video.id.kind === "youtube#video";
   const thumbnail = !isVideo && "videoHorizontal__thumbnail-channel";
 
   return (
     <Row
-      className="m-1 py-2 videoHorizontal align-items-center"
+      className="py-2 m-1 videoHorizontal align-items-center"
       onClick={handleClick}
     >
-      <Col xs={6} md={searchScreen ? 4 : 6} className="videoHorizontal__left">
+      <Col
+        xs={6}
+        md={searchScreen || subScreen ? 4 : 6}
+        className="videoHorizontal__left"
+      >
         <LazyLoadImage
-          src={video?.snippet?.thumbnails?.medium?.url}
+          src={medium.url}
           effect="blur"
           className={`videoHorizontal__thumbnail ${thumbnail}`}
           wrapperClassName="videoHorizontal__thumbnail-wrapper"
@@ -73,15 +91,18 @@ function VideoHorizontal({ video, searchScreen }) {
       </Col>
       <Col
         xs={6}
-        md={searchScreen ? 5 : 6}
+        md={searchScreen || subScreen ? 5 : 6}
         className="videoHorizontal__right p-0"
       >
-        <p className="videoHorizontal__title mb-0">{video?.snippet?.title}</p>
+        <p className="videoHorizontal__title mb-0">{title}</p>
         {searchScreen && isVideo && (
           <div className="videoHorizontal__details my-1">
             {numeral(views).format("0.a").toUpperCase()} •{" "}
-            {moment(video?.snippet?.publishedAt).fromNow()}
+            {moment(publishedAt).fromNow()}
           </div>
+        )}
+        {subScreen && (
+          <p className="my-0 subCount">{video.contentDetails.totalItemCount} Videos</p>
         )}
         {isVideo && (
           <div className="videoHorizontal__channel d-flex align-items-center">
@@ -92,21 +113,20 @@ function VideoHorizontal({ video, searchScreen }) {
                 effect="blur"
               />
             )}
-            <p>{video?.snippet?.channelTitle}</p>
+            <p>{channelTitle}</p>
           </div>
         )}
 
-        {!searchScreen && (
+        {!searchScreen && isVideo && (
           <div className="videoHorizontal__details">
             {numeral(views).format("0.a").toUpperCase()} •{" "}
-            {moment(video?.snippet?.publishedAt).fromNow()}
+            {moment(publishedAt).fromNow()}
           </div>
         )}
-        {searchScreen && (
-          <p className="mt-1 videoHorizontal__description">
-            {video.snippet?.description}
-          </p>
-        )}
+        {/* eslint-disable-next-line */}
+        {(searchScreen || subScreen) && (
+            <p className="mt-1 videoHorizontal__description">{description}</p>
+          )}
       </Col>
     </Row>
   );

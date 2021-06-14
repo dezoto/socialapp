@@ -93,7 +93,7 @@ export const getRelatedVideos = (id) => async (dispatch) => {
       params: {
         part: "snippet",
         relatedToVideoId: id,
-        maxResults: 40,
+        maxResults: 30,
         type: "video",
       },
     });
@@ -129,6 +129,32 @@ export const getVideosBySearch = (keyword) => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: actions.SEARCH_VIDEOS_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const getVideosByChannel = () => async (dispatch, getState) => {
+  try {
+    dispatch({
+      type: actions.SUBSCRIPTION_CHANNEL_REQUEST,
+    });
+    const { data } = await request("/subscriptions", {
+      params: {
+        part: "snippet,contentDetails",
+        mine: true,
+      },
+      headers: {
+        Authorization: `Bearer ${getState().auth.accessToken}`,
+      },
+    });
+    dispatch({
+      type: actions.SUBSCRIPTION_CHANNEL_SUCCESS,
+      payload: data.items,
+    });
+  } catch (error) {
+    dispatch({
+      type: actions.SUBSCRIPTION_CHANNEL_FAIL,
       payload: error.message,
     });
   }

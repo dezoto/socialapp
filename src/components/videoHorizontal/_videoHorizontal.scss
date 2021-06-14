@@ -73,6 +73,10 @@
     }
 }
 
+.subCount {
+    font-size: 13px;
+}
+
 @media (max-width: $breakpoint-small) {
     .videoHorizontal {
         font-size: 12px;
