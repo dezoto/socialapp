@@ -143,6 +143,7 @@ export const getSubscribedChannel = () => async (dispatch, getState) => {
       params: {
         part: "snippet,contentDetails",
         mine: true,
+        maxResults: 10,
       },
       headers: {
         Authorization: `Bearer ${getState().auth.accessToken}`,
