@@ -8,13 +8,13 @@ import { IconButton } from "@material-ui/core";
 import { useSelector } from "react-redux";
 
 function Header({ handleToggleSidebar }) {
-  const [input, setInput] = useState('');
+  const [input, setInput] = useState("");
   const history = useHistory();
-  const {photoURL} = useSelector(state => state.auth?.user)
+  const user = useSelector((state) => state.auth?.user);
   const submitHandler = (e) => {
     e.preventDefault();
-    history.push(`/search/${input}`)
-  }
+    history.push(`/search/${input}`);
+  };
   return (
     <div className="border border-dark header">
       <div className="header__left">
@@ -32,8 +32,13 @@ function Header({ handleToggleSidebar }) {
         </Link>
       </div>
       <form onSubmit={submitHandler}>
-        <input type="text" placeholder="Search" value={input} onChange={(e) => setInput(e.target.value)}/>
-        <button className='buttonCaption4' type="submit">
+        <input
+          type="text"
+          placeholder="Search"
+          value={input}
+          onChange={(e) => setInput(e.target.value)}
+        />
+        <button className="buttonCaption4" type="submit">
           <AiOutlineSearch size={22} />
         </button>
       </form>
@@ -47,11 +52,7 @@ function Header({ handleToggleSidebar }) {
         <IconButton className="iconButton buttonCaption3">
           <MdNotifications className="header__icon" size={25} />
         </IconButton>
-        <img
-          className="header__icon"
-          src={photoURL}
-          alt="userImage"
-        />
+        <img className="header__icon" src={user?.photoURL} alt="avatar" />
       </div>
     </div>
   );

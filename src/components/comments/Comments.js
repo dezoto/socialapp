@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addComment, getCommentByVideoId } from "../../redux/actions/commentsActions";
+import {
+  addComment,
+  getCommentByVideoId,
+} from "../../redux/actions/commentsActions";
 import Comment from "../comment/Comment";
 import "./_comments.scss";
 
@@ -10,9 +13,9 @@ function Comments({ videoId }) {
     (comment) => comment.snippet.topLevelComment.snippet
   );
 
-  const [text, setText] = useState('');
+  const [text, setText] = useState("");
   const dispatch = useDispatch();
-  const {photoURL} = useSelector(state => state.auth?.user)
+  const user = useSelector((state) => state.auth?.user);
 
   useEffect(() => {
     dispatch(getCommentByVideoId(videoId));
@@ -20,9 +23,9 @@ function Comments({ videoId }) {
 
   const handleComment = (e) => {
     e.preventDefault();
-    if(text.length === 0) return
-    dispatch(addComment(videoId, text))
-    setText('')
+    if (text.length === 0) return;
+    dispatch(addComment(videoId, text));
+    setText("");
   };
 
   return (
@@ -30,7 +33,7 @@ function Comments({ videoId }) {
       <p>{comments?.length} comments</p>
       <div className="comments__form d-flex w-100 my-2">
         <img
-          src={photoURL}
+          src={user?.photoURL}
           alt="avatar"
           className="rounded-circle mr-3"
         />

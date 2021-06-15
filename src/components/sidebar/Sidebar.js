@@ -2,13 +2,13 @@ import React from 'react'
 import './_sidebar.scss'
 import {MdSubscriptions, MdExitToApp, MdThumbUp, MdHistory, MdLibraryBooks, MdHome, MdWatchLater} from "react-icons/md"
 import { useDispatch } from 'react-redux'
-import { logout } from '../../redux/actions/authAction';
+import { log_out } from '../../redux/actions/authAction';
 import { Link } from 'react-router-dom';
 
 function Sidebar({sidebar, handleToggleSidebar}) {
     const dispatch = useDispatch();
     const logOutHandler = () => {
-        dispatch(logout())
+        dispatch(log_out())
     }
     return (
         <nav className={sidebar? "sidebar open": "sidebar"} onClick={() => handleToggleSidebar()}>
