@@ -12,6 +12,7 @@ function Comments({ videoId }) {
 
   const [text, setText] = useState('');
   const dispatch = useDispatch();
+  const {photoURL} = useSelector(state => state.auth?.user)
 
   useEffect(() => {
     dispatch(getCommentByVideoId(videoId));
@@ -29,8 +30,8 @@ function Comments({ videoId }) {
       <p>{comments?.length} comments</p>
       <div className="comments__form d-flex w-100 my-2">
         <img
-          src="http://pm1.narvii.com/6387/8256503d4679d3b2ea14d5df4ce2a6bd70d2b3f9_00.jpg"
-          alt=""
+          src={photoURL}
+          alt="avatar"
           className="rounded-circle mr-3"
         />
         <form onSubmit={handleComment} className="d-flex flex-grow-1">

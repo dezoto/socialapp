@@ -5,10 +5,12 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { MdNotifications, MdApps, MdVideocam } from "react-icons/md";
 import { Link, useHistory } from "react-router-dom";
 import { IconButton } from "@material-ui/core";
+import { useSelector } from "react-redux";
 
 function Header({ handleToggleSidebar }) {
   const [input, setInput] = useState('');
   const history = useHistory();
+  const {photoURL} = useSelector(state => state.auth?.user)
   const submitHandler = (e) => {
     e.preventDefault();
     history.push(`/search/${input}`)
@@ -47,7 +49,7 @@ function Header({ handleToggleSidebar }) {
         </IconButton>
         <img
           className="header__icon"
-          src="http://pm1.narvii.com/6387/8256503d4679d3b2ea14d5df4ce2a6bd70d2b3f9_00.jpg"
+          src={photoURL}
           alt="userImage"
         />
       </div>
